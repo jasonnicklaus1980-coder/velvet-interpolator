@@ -30,6 +30,10 @@ jobs:
             DEBIAN_FRONTEND=noninteractive apt-get install -y g++-arm-linux-gnueabihf &&
             sh scripts/build-arm.sh build/arm'
 
+      # Docker creates root-owned files in the shared workspace.
+      - name: Fix build output ownership
+        run: sudo chown -R "$(id -u):$(id -g)" build
+
       - name: Check the binary matches the device (ARMv7, glibc 2.27, no extra libraries)
         run: sh scripts/check-arm.sh build/arm/velvet_interp.so
 
