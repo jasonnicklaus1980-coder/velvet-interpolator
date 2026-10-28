@@ -51,4 +51,6 @@ g++ -o build/line_test build/line_test.o build/vi_line.o build/musicout.o build/
 rm -rf build/out_line && mkdir -p build/out_line && ./build/line_test > /dev/null
 test -f build/out_line/melody.mid && test -f build/out_line/line.mid && test -f build/out_line/notes.mid && echo "line trigger wrote line.mid, notes.mid and melody.mid"
 python3 tests/check_pads.py build/out_line/melody.mid build/out_line/melody_pads.mid 36 || { echo "FAIL: melody pads"; exit 1; } || { echo "FAIL: Line did not write all three files"; exit 1; }
+gcc -std=gnu99 -O2 -Wall -Wextra -Isrc tests/test_padsend.c src/padsend.c src/musicout.c src/chordcore.c -lm -o build/test_padsend
+./build/test_padsend
 echo "all host tests passed"
