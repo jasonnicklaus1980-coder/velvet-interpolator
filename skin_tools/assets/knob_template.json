@@ -1,0 +1,191 @@
+{
+ "version": 4,
+ "actions": [
+  {
+   "version": 2,
+   "onAction": "Mouse Down",
+   "handler": "Q-Link",
+   "handleName": "Data",
+   "additionalData": "",
+   "handle remapping": {
+    "version": 1,
+    "map": []
+   }
+  },
+  {
+   "version": 2,
+   "onAction": "Double Click",
+   "handler": "Show Overlay",
+   "handleName": "",
+   "additionalData": "knob overlay",
+   "handle remapping": {
+    "version": 1,
+    "map": []
+   }
+  },
+  {
+   "version": 2,
+   "onAction": "Enter Pressed",
+   "handler": "Show Overlay",
+   "handleName": "",
+   "additionalData": "knob overlay",
+   "handle remapping": {
+    "version": 1,
+    "map": []
+   }
+  }
+ ],
+ "backgroundData": {
+  "version": 1,
+  "focussed": {
+   "version": 1,
+   "colour": "0",
+   "image": ""
+  },
+  "unfocussed": {
+   "version": 1,
+   "colour": "0",
+   "image": ""
+  }
+ },
+ "ignoreMousePresses": false,
+ "disableCoarseDataWheel": false,
+ "repeats": 1,
+ "hideQLinkBounds": true,
+ "componentsData": [
+  {
+   "version": 2,
+   "componentData": {
+    "version": 1,
+    "name": "Focus",
+    "type": "Focus",
+    "data": {
+     "version": 1,
+     "backgroundColour": "00000000",
+     "outlineColour": "ff96d2ff",
+     "backgroundInset": 2.0,
+     "outlineThickness": 2.0
+    }
+   },
+   "handle remapping": {
+    "version": 1,
+    "map": []
+   },
+   "bounds": {
+    "version": 2,
+    "acceptsHWFocus": "No",
+    "showWhenDataModelInvalid": "Show",
+    "whenVisible": "WhenFocussed",
+    "boundsType": "Absolute",
+    "bounds": "0 0 108 138",
+    "additionalInvalidatingHandles": []
+   }
+  },
+  {
+   "version": 2,
+   "componentData": {
+    "version": 1,
+    "name": "Knob",
+    "type": "Knob",
+    "data": {
+     "version": 5,
+     "knobType": "FilmStrip",
+     "filmStrip": "rs_knob_M.png",
+     "numFrames": 127,
+     "invert": false,
+     "dragOrientation": "Vertical",
+     "handleName": "Data"
+    }
+   },
+   "handle remapping": {
+    "version": 1,
+    "map": []
+   },
+   "bounds": {
+    "version": 2,
+    "acceptsHWFocus": "No",
+    "showWhenDataModelInvalid": "Show",
+    "whenVisible": "Always",
+    "boundsType": "Absolute",
+    "bounds": "16 4 76 76",
+    "additionalInvalidatingHandles": []
+   }
+  },
+  {
+   "version": 2,
+   "componentData": {
+    "version": 1,
+    "name": "Name",
+    "type": "Label",
+    "data": {
+     "version": 1,
+     "textStyle": {
+      "version": 1,
+      "font": {
+       "version": 1,
+       "name": "Titillium Web",
+       "style": "SemiBold",
+       "height": 15.0
+      },
+      "colour": "ffe8e6e0",
+      "justification": "horizontallyCentred verticallyCentred",
+      "case": "Upper Case"
+     },
+     "type": "Name",
+     "handleName": "Data"
+    }
+   },
+   "handle remapping": {
+    "version": 1,
+    "map": []
+   },
+   "bounds": {
+    "version": 2,
+    "acceptsHWFocus": "No",
+    "showWhenDataModelInvalid": "Show",
+    "whenVisible": "Always",
+    "boundsType": "Absolute",
+    "bounds": "0 84 108 18",
+    "additionalInvalidatingHandles": []
+   }
+  },
+  {
+   "version": 2,
+   "componentData": {
+    "version": 1,
+    "name": "Value",
+    "type": "Label",
+    "data": {
+     "version": 1,
+     "textStyle": {
+      "version": 1,
+      "font": {
+       "version": 1,
+       "name": "Titillium Web",
+       "style": "SemiBold",
+       "height": 17.0
+      },
+      "colour": "ffffa838",
+      "justification": "horizontallyCentred verticallyCentred",
+      "case": "Original"
+     },
+     "type": "Value",
+     "handleName": "Data"
+    }
+   },
+   "handle remapping": {
+    "version": 1,
+    "map": []
+   },
+   "bounds": {
+    "version": 2,
+    "acceptsHWFocus": "No",
+    "showWhenDataModelInvalid": "Show",
+    "whenVisible": "Always",
+    "boundsType": "Absolute",
+    "bounds": "0 102 108 20",
+    "additionalInvalidatingHandles": []
+   }
+  }
+ ]
+}

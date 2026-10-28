@@ -1,0 +1,34 @@
+name: Build Velvet Interpolator
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+env:
+  VERSION: "0.1.0"
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sh scripts/run-tests.sh
+  build-arm:
+    needs: test
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      # The compile runs inside Ubuntu 18.04 (glibc 2.27), the newest glibc the MPC has. Building on 22.04
+      # would pull in GLIBC_2.34 symbols and the plugin would not load on the device.
+      - name: Compile velvet_interp.so for ARMv7 in Ubuntu 18.04
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src ubuntu:18.04 sh -c '
+            sed -i "s|archive.ubuntu.com|old-releases.ubuntu.com|g; s|security.ubuntu.com|old-releases.ubuntu.com|g" /etc/apt/sources.list &&
+            apt-get update && apt-get install -y g++-arm-linux-gnueabihf &&
+            sh scripts/build-arm.sh build/arm'
+      - name: Check the binary matches the device (ARMv7, glibc 2.27, no extra libraries)
+        run: sh scripts/check-arm.sh build/arm/velvet_interp.so
+      - name: Make the install package
+        run: sh scripts/make-package.sh "$VERSION" build/arm/velvet_interp.so build/pkg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VelvetInterpolator-${{ env.VERSION }}-mpc-armv7
+          path: build/pkg/VelvetInterpolator-${{ env.VERSION }}-mpc-armv7.zip

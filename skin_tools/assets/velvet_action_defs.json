@@ -1,0 +1,41 @@
+{
+ "toggle_actions": [
+  {
+   "version": 2,
+   "onAction": "Enter Pressed",
+   "handler": "Toggle Switch",
+   "handleName": "Data",
+   "additionalData": "",
+   "handle remapping": {
+    "version": 1,
+    "map": []
+   }
+  }
+ ],
+ "segment_actions": [
+  {
+   "version": 2,
+   "onAction": "Mouse Down",
+   "handler": "Q-Link",
+   "handleName": "Data",
+   "additionalData": "",
+   "handle remapping": {
+    "version": 1,
+    "map": []
+   }
+  }
+ ],
+ "root_background": {
+  "version": 1,
+  "focussed": {
+   "version": 1,
+   "colour": "ff0c0c10",
+   "image": ""
+  },
+  "unfocussed": {
+   "version": 1,
+   "colour": "ff0c0c10",
+   "image": ""
+  }
+ }
+}

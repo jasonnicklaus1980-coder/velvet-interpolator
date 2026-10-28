@@ -1,0 +1,53 @@
+{
+ "version": 4,
+ "actions": [],
+ "backgroundData": {
+  "version": 1,
+  "focussed": {
+   "version": 1,
+   "colour": "0",
+   "image": ""
+  },
+  "unfocussed": {
+   "version": 1,
+   "colour": "0",
+   "image": ""
+  }
+ },
+ "ignoreMousePresses": true,
+ "disableCoarseDataWheel": false,
+ "repeats": 1,
+ "hideQLinkBounds": true,
+ "componentsData": [
+  {
+   "version": 2,
+   "componentData": {
+    "version": 1,
+    "name": "Knob",
+    "type": "Knob",
+    "data": {
+     "version": 5,
+     "knobType": "FilmStrip",
+     "filmStrip": "rs_meter.png",
+     "numFrames": 127,
+     "invert": false,
+     "dragOrientation": "Vertical",
+     "handleName": "Data"
+    }
+   },
+   "handle remapping": {
+    "version": 1,
+    "map": []
+   },
+   "bounds": {
+    "version": 2,
+    "acceptsHWFocus": "No",
+    "showWhenDataModelInvalid": "Show",
+    "whenVisible": "Always",
+    "boundsType": "Absolute",
+    "bounds": "0 0 12 168",
+    "additionalInvalidatingHandles": []
+   }
+  }
+ ]
+}

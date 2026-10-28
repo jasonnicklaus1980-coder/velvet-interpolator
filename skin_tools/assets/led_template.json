@@ -1,0 +1,53 @@
+{
+ "version": 4,
+ "actions": [],
+ "backgroundData": {
+  "version": 1,
+  "focussed": {
+   "version": 1,
+   "colour": "0",
+   "image": ""
+  },
+  "unfocussed": {
+   "version": 1,
+   "colour": "0",
+   "image": ""
+  }
+ },
+ "ignoreMousePresses": true,
+ "disableCoarseDataWheel": false,
+ "repeats": 1,
+ "hideQLinkBounds": true,
+ "componentsData": [
+  {
+   "version": 2,
+   "componentData": {
+    "version": 1,
+    "name": "Button",
+    "type": "Button",
+    "data": {
+     "version": 2,
+     "onImage": "rs_led_on.png",
+     "offImage": "rs_led_off.png",
+     "buttonId": 1,
+     "numButtonsInGroup": 1,
+     "handleName": "Data",
+     "gestureBehaviour": "Instant"
+    }
+   },
+   "handle remapping": {
+    "version": 1,
+    "map": []
+   },
+   "bounds": {
+    "version": 2,
+    "acceptsHWFocus": "No",
+    "showWhenDataModelInvalid": "Show",
+    "whenVisible": "Always",
+    "boundsType": "Absolute",
+    "bounds": "0 0 16 16",
+    "additionalInvalidatingHandles": []
+   }
+  }
+ ]
+}
