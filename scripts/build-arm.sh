@@ -1,22 +1,42 @@
-#!/bin/sh
-# Cross-compiles velvet_interp.so for 32-bit ARM MPC OS (ARMv7-A, VFPv4/NEON, hard-float).
-# Needs: g++-arm-linux-gnueabihf. Run inside an Ubuntu 18.04 (glibc 2.27) environment so the .so does not
-# need a newer glibc than the device has (see .github/workflows/build.yml).
-set -eu
-cd "$(dirname "$0")/.."
-OUT="${1:-build/arm}"
-CXX=arm-linux-gnueabihf-g++
-CC=arm-linux-gnueabihf-gcc
-command -v "$CXX" >/dev/null || { echo "error: $CXX not found" >&2; exit 1; }
-mkdir -p "$OUT"
-FLAGS="-O2 -fPIC -fvisibility=hidden -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard -Wall -Wextra"
-"$CC" -std=gnu99 $FLAGS -c src/musicout.c -o "$OUT/musicout.o"
-"$CC" -std=gnu99 $FLAGS -c src/chordcore.c -o "$OUT/chordcore.o"
-"$CC" -std=gnu99 $FLAGS -c src/notes.c -o "$OUT/notes.o"
-"$CC" -std=gnu99 $FLAGS -c src/poly.c -o "$OUT/poly.o"
-"$CC" -std=gnu99 $FLAGS -c src/hpss.c -o "$OUT/hpss.o"
-"$CC" -std=gnu99 $FLAGS -c src/keys.c -o "$OUT/keys.o"
-"$CXX" -std=c++14 $FLAGS -fno-exceptions -fno-rtti -Isrc -c src/velvet_interp.cpp -o "$OUT/velvet_interp.o"
-"$CXX" -shared -s -o "$OUT/velvet_interp.so" "$OUT/velvet_interp.o" "$OUT/musicout.o" "$OUT/chordcore.o" \
-    "$OUT/notes.o" "$OUT/poly.o" "$OUT/hpss.o" "$OUT/keys.o" -lm -lpthread
-echo "built $OUT/velvet_interp.so"
+
+name: Build Velvet Interpolator
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  VERSION: "0.1.0"
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sh scripts/run-tests.sh
+
+  build-arm:
+    needs: test
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      # Compile inside Ubuntu 18.04 (glibc 2.27),
+      # the newest glibc supported by the MPC.
+      - name: Compile velvet_interp.so for ARMv7 in Ubuntu 18.04
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src ubuntu:18.04 sh -c '
+            apt-get update &&
+            DEBIAN_FRONTEND=noninteractive apt-get install -y g++-arm-linux-gnueabihf &&
+            sh scripts/build-arm.sh build/arm'
+
+      - name: Check the binary matches the device (ARMv7, glibc 2.27, no extra libraries)
+        run: sh scripts/check-arm.sh build/arm/velvet_interp.so
+
+      - name: Make the install package
+        run: sh scripts/make-package.sh "$VERSION" build/arm/velvet_interp.so build/pkg
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VelvetInterpolator-${{ env.VERSION }}-mpc-armv7
+          path: build/pkg/VelvetInterpolator-${{ env.VERSION }}-mpc-armv7.zip
