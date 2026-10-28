@@ -598,6 +598,394 @@
      }
     },
     {
+     "key": "viKnob_oct",
+     "value": {
+      "version": 4,
+      "actions": [
+       {
+        "version": 2,
+        "onAction": "Mouse Down",
+        "handler": "Q-Link",
+        "handleName": "Data",
+        "additionalData": "",
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        }
+       },
+       {
+        "version": 2,
+        "onAction": "Double Click",
+        "handler": "Show Overlay",
+        "handleName": "",
+        "additionalData": "knob overlay",
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        }
+       },
+       {
+        "version": 2,
+        "onAction": "Enter Pressed",
+        "handler": "Show Overlay",
+        "handleName": "",
+        "additionalData": "knob overlay",
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        }
+       }
+      ],
+      "backgroundData": {
+       "version": 1,
+       "focussed": {
+        "version": 1,
+        "colour": "0",
+        "image": ""
+       },
+       "unfocussed": {
+        "version": 1,
+        "colour": "0",
+        "image": ""
+       }
+      },
+      "ignoreMousePresses": false,
+      "disableCoarseDataWheel": false,
+      "repeats": 1,
+      "hideQLinkBounds": true,
+      "componentsData": [
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Focus",
+         "type": "Focus",
+         "data": {
+          "version": 1,
+          "backgroundColour": "00000000",
+          "outlineColour": "ff96d2ff",
+          "backgroundInset": 2.0,
+          "outlineThickness": 2.0
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "WhenFocussed",
+         "boundsType": "Absolute",
+         "bounds": "0 0 108 138",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Knob",
+         "type": "Knob",
+         "data": {
+          "version": 5,
+          "knobType": "FilmStrip",
+          "filmStrip": "vi_knob.png",
+          "numFrames": 128,
+          "invert": false,
+          "dragOrientation": "Vertical",
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "16 4 76 76",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Name",
+         "type": "Label",
+         "data": {
+          "version": 1,
+          "textStyle": {
+           "version": 1,
+           "font": {
+            "version": 1,
+            "name": "Titillium Web",
+            "style": "SemiBold",
+            "height": 15.0
+           },
+           "colour": "ffe8e6e0",
+           "justification": "horizontallyCentred verticallyCentred",
+           "case": "Upper Case"
+          },
+          "type": "Name",
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "0 84 108 18",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Value",
+         "type": "Label",
+         "data": {
+          "version": 1,
+          "textStyle": {
+           "version": 1,
+           "font": {
+            "version": 1,
+            "name": "Titillium Web",
+            "style": "SemiBold",
+            "height": 17.0
+           },
+           "colour": "ffffa838",
+           "justification": "horizontallyCentred verticallyCentred",
+           "case": "Original"
+          },
+          "type": "Value",
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "0 102 108 20",
+         "additionalInvalidatingHandles": []
+        }
+       }
+      ]
+     }
+    },
+    {
+     "key": "viKnob_voi",
+     "value": {
+      "version": 4,
+      "actions": [
+       {
+        "version": 2,
+        "onAction": "Mouse Down",
+        "handler": "Q-Link",
+        "handleName": "Data",
+        "additionalData": "",
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        }
+       },
+       {
+        "version": 2,
+        "onAction": "Double Click",
+        "handler": "Show Overlay",
+        "handleName": "",
+        "additionalData": "knob overlay",
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        }
+       },
+       {
+        "version": 2,
+        "onAction": "Enter Pressed",
+        "handler": "Show Overlay",
+        "handleName": "",
+        "additionalData": "knob overlay",
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        }
+       }
+      ],
+      "backgroundData": {
+       "version": 1,
+       "focussed": {
+        "version": 1,
+        "colour": "0",
+        "image": ""
+       },
+       "unfocussed": {
+        "version": 1,
+        "colour": "0",
+        "image": ""
+       }
+      },
+      "ignoreMousePresses": false,
+      "disableCoarseDataWheel": false,
+      "repeats": 1,
+      "hideQLinkBounds": true,
+      "componentsData": [
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Focus",
+         "type": "Focus",
+         "data": {
+          "version": 1,
+          "backgroundColour": "00000000",
+          "outlineColour": "ff96d2ff",
+          "backgroundInset": 2.0,
+          "outlineThickness": 2.0
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "WhenFocussed",
+         "boundsType": "Absolute",
+         "bounds": "0 0 108 138",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Knob",
+         "type": "Knob",
+         "data": {
+          "version": 5,
+          "knobType": "FilmStrip",
+          "filmStrip": "vi_knob.png",
+          "numFrames": 128,
+          "invert": false,
+          "dragOrientation": "Vertical",
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "16 4 76 76",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Name",
+         "type": "Label",
+         "data": {
+          "version": 1,
+          "textStyle": {
+           "version": 1,
+           "font": {
+            "version": 1,
+            "name": "Titillium Web",
+            "style": "SemiBold",
+            "height": 15.0
+           },
+           "colour": "ffe8e6e0",
+           "justification": "horizontallyCentred verticallyCentred",
+           "case": "Upper Case"
+          },
+          "type": "Name",
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "0 84 108 18",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Value",
+         "type": "Label",
+         "data": {
+          "version": 1,
+          "textStyle": {
+           "version": 1,
+           "font": {
+            "version": 1,
+            "name": "Titillium Web",
+            "style": "SemiBold",
+            "height": 17.0
+           },
+           "colour": "ffffa838",
+           "justification": "horizontallyCentred verticallyCentred",
+           "case": "Original"
+          },
+          "type": "Value",
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "0 102 108 20",
+         "additionalInvalidatingHandles": []
+        }
+       }
+      ]
+     }
+    },
+    {
      "key": "viBar_prog",
      "value": {
       "version": 4,
@@ -1990,6 +2378,334 @@
      }
     },
     {
+     "key": "viReadout_key",
+     "value": {
+      "version": 4,
+      "actions": [
+       {
+        "version": 2,
+        "onAction": "Mouse Down",
+        "handler": "Q-Link",
+        "handleName": "Data",
+        "additionalData": "",
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        }
+       },
+       {
+        "version": 2,
+        "onAction": "Double Click",
+        "handler": "Show Overlay",
+        "handleName": "",
+        "additionalData": "knob overlay",
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        }
+       },
+       {
+        "version": 2,
+        "onAction": "Enter Pressed",
+        "handler": "Show Overlay",
+        "handleName": "",
+        "additionalData": "knob overlay",
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        }
+       }
+      ],
+      "backgroundData": {
+       "version": 1,
+       "focussed": {
+        "version": 1,
+        "colour": "0",
+        "image": ""
+       },
+       "unfocussed": {
+        "version": 1,
+        "colour": "0",
+        "image": ""
+       }
+      },
+      "ignoreMousePresses": false,
+      "disableCoarseDataWheel": false,
+      "repeats": 1,
+      "hideQLinkBounds": true,
+      "componentsData": [
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Focus",
+         "type": "Focus",
+         "data": {
+          "version": 1,
+          "backgroundColour": "00000000",
+          "outlineColour": "ff96d2ff",
+          "backgroundInset": 2.0,
+          "outlineThickness": 2.0
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "WhenFocussed",
+         "boundsType": "Absolute",
+         "bounds": "0 0 108 138",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Name",
+         "type": "Label",
+         "data": {
+          "version": 1,
+          "textStyle": {
+           "version": 1,
+           "font": {
+            "version": 1,
+            "name": "Titillium Web",
+            "style": "SemiBold",
+            "height": 15.0
+           },
+           "colour": "ffe8e6e0",
+           "justification": "horizontallyCentred verticallyCentred",
+           "case": "Upper Case"
+          },
+          "type": "Name",
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "0 84 108 18",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Value",
+         "type": "Label",
+         "data": {
+          "version": 1,
+          "textStyle": {
+           "version": 1,
+           "font": {
+            "version": 1,
+            "name": "Titillium Web",
+            "style": "SemiBold",
+            "height": 17.0
+           },
+           "colour": "ffffa838",
+           "justification": "horizontallyCentred verticallyCentred",
+           "case": "Original"
+          },
+          "type": "Value",
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "0 102 108 20",
+         "additionalInvalidatingHandles": []
+        }
+       }
+      ]
+     }
+    },
+    {
+     "key": "viReadout_keyconf",
+     "value": {
+      "version": 4,
+      "actions": [
+       {
+        "version": 2,
+        "onAction": "Mouse Down",
+        "handler": "Q-Link",
+        "handleName": "Data",
+        "additionalData": "",
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        }
+       },
+       {
+        "version": 2,
+        "onAction": "Double Click",
+        "handler": "Show Overlay",
+        "handleName": "",
+        "additionalData": "knob overlay",
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        }
+       },
+       {
+        "version": 2,
+        "onAction": "Enter Pressed",
+        "handler": "Show Overlay",
+        "handleName": "",
+        "additionalData": "knob overlay",
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        }
+       }
+      ],
+      "backgroundData": {
+       "version": 1,
+       "focussed": {
+        "version": 1,
+        "colour": "0",
+        "image": ""
+       },
+       "unfocussed": {
+        "version": 1,
+        "colour": "0",
+        "image": ""
+       }
+      },
+      "ignoreMousePresses": false,
+      "disableCoarseDataWheel": false,
+      "repeats": 1,
+      "hideQLinkBounds": true,
+      "componentsData": [
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Focus",
+         "type": "Focus",
+         "data": {
+          "version": 1,
+          "backgroundColour": "00000000",
+          "outlineColour": "ff96d2ff",
+          "backgroundInset": 2.0,
+          "outlineThickness": 2.0
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "WhenFocussed",
+         "boundsType": "Absolute",
+         "bounds": "0 0 108 138",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Name",
+         "type": "Label",
+         "data": {
+          "version": 1,
+          "textStyle": {
+           "version": 1,
+           "font": {
+            "version": 1,
+            "name": "Titillium Web",
+            "style": "SemiBold",
+            "height": 15.0
+           },
+           "colour": "ffe8e6e0",
+           "justification": "horizontallyCentred verticallyCentred",
+           "case": "Upper Case"
+          },
+          "type": "Name",
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "0 84 108 18",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Value",
+         "type": "Label",
+         "data": {
+          "version": 1,
+          "textStyle": {
+           "version": 1,
+           "font": {
+            "version": 1,
+            "name": "Titillium Web",
+            "style": "SemiBold",
+            "height": 17.0
+           },
+           "colour": "ffffa838",
+           "justification": "horizontallyCentred verticallyCentred",
+           "case": "Original"
+          },
+          "type": "Value",
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "0 102 108 20",
+         "additionalInvalidatingHandles": []
+        }
+       }
+      ]
+     }
+    },
+    {
      "key": "PLAY|Play",
      "value": {
       "version": 4,
@@ -2821,6 +3537,322 @@
        }
       ]
      }
+    },
+    {
+     "key": "ANALYZE|Analyze",
+     "value": {
+      "version": 4,
+      "actions": [],
+      "backgroundData": {
+       "version": 1,
+       "focussed": {
+        "version": 1,
+        "colour": "ff0c0c10",
+        "image": ""
+       },
+       "unfocussed": {
+        "version": 1,
+        "colour": "ff0c0c10",
+        "image": ""
+       }
+      },
+      "ignoreMousePresses": false,
+      "disableCoarseDataWheel": false,
+      "repeats": 1,
+      "hideQLinkBounds": true,
+      "componentsData": [
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Label ",
+         "type": "Image",
+         "data": {
+          "version": 2,
+          "imageType": "Regular",
+          "colour": "0",
+          "image": "vi_bg.png"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "0 0 1280 628",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Analyse",
+         "type": "viToggle_ana",
+         "data": {
+          "version": 1,
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": [
+          {
+           "key": "Data",
+           "value": "Parameter 1"
+          }
+         ]
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "Yes",
+         "showWhenDataModelInvalid": "Hide",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "60 96 260 56",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Key",
+         "type": "viReadout_key",
+         "data": {
+          "version": 1,
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": [
+          {
+           "key": "Data",
+           "value": "Parameter 25"
+          }
+         ]
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "Yes",
+         "showWhenDataModelInvalid": "Hide",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "360 96 260 60",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Key confidence",
+         "type": "viReadout_keyconf",
+         "data": {
+          "version": 1,
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": [
+          {
+           "key": "Data",
+           "value": "Parameter 26"
+          }
+         ]
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "Yes",
+         "showWhenDataModelInvalid": "Hide",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "660 96 260 60",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Analyse progress",
+         "type": "viBar_prog",
+         "data": {
+          "version": 1,
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": [
+          {
+           "key": "Data",
+           "value": "Parameter 4"
+          }
+         ]
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "Yes",
+         "showWhenDataModelInvalid": "Hide",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "200 420 640 18",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Progress",
+         "type": "viReadout_prog",
+         "data": {
+          "version": 1,
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": [
+          {
+           "key": "Data",
+           "value": "Parameter 4"
+          }
+         ]
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "Yes",
+         "showWhenDataModelInvalid": "Hide",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "880 404 260 60",
+         "additionalInvalidatingHandles": []
+        }
+       }
+      ]
+     }
+    },
+    {
+     "key": "PADS|Pads",
+     "value": {
+      "version": 4,
+      "actions": [],
+      "backgroundData": {
+       "version": 1,
+       "focussed": {
+        "version": 1,
+        "colour": "ff0c0c10",
+        "image": ""
+       },
+       "unfocussed": {
+        "version": 1,
+        "colour": "ff0c0c10",
+        "image": ""
+       }
+      },
+      "ignoreMousePresses": false,
+      "disableCoarseDataWheel": false,
+      "repeats": 1,
+      "hideQLinkBounds": true,
+      "componentsData": [
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Label ",
+         "type": "Image",
+         "data": {
+          "version": 2,
+          "imageType": "Regular",
+          "colour": "0",
+          "image": "vi_bg.png"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": []
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "No",
+         "showWhenDataModelInvalid": "Show",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "0 0 1280 628",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Octave",
+         "type": "viKnob_oct",
+         "data": {
+          "version": 1,
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": [
+          {
+           "key": "Data",
+           "value": "Parameter 23"
+          }
+         ]
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "Yes",
+         "showWhenDataModelInvalid": "Hide",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "300 200 108 138",
+         "additionalInvalidatingHandles": []
+        }
+       },
+       {
+        "version": 2,
+        "componentData": {
+         "version": 1,
+         "name": "Voicing",
+         "type": "viKnob_voi",
+         "data": {
+          "version": 1,
+          "handleName": "Data"
+         }
+        },
+        "handle remapping": {
+         "version": 1,
+         "map": [
+          {
+           "key": "Data",
+           "value": "Parameter 24"
+          }
+         ]
+        },
+        "bounds": {
+         "version": 2,
+         "acceptsHWFocus": "Yes",
+         "showWhenDataModelInvalid": "Hide",
+         "whenVisible": "Always",
+         "boundsType": "Absolute",
+         "bounds": "560 200 108 138",
+         "additionalInvalidatingHandles": []
+        }
+       }
+      ]
+     }
     }
    ]
   },
@@ -2838,6 +3870,30 @@
      "0 0 0 0"
     ],
     "componentName": "PLAY|Play",
+    "initialSize": "0 0 1280 628",
+    "scale": 1.0
+   },
+   {
+    "version": 3,
+    "tabName": "Analyze",
+    "fnKeyIndex": 1,
+    "fnKeySubIndex": 0,
+    "qlinkBoundsData": [
+     "0 0 0 0"
+    ],
+    "componentName": "ANALYZE|Analyze",
+    "initialSize": "0 0 1280 628",
+    "scale": 1.0
+   },
+   {
+    "version": 3,
+    "tabName": "Pads",
+    "fnKeyIndex": 2,
+    "fnKeySubIndex": 0,
+    "qlinkBoundsData": [
+     "0 0 0 0"
+    ],
+    "componentName": "PADS|Pads",
     "initialSize": "0 0 1280 628",
     "scale": 1.0
    }

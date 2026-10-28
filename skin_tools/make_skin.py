@@ -267,8 +267,8 @@ def build():
         plate(on, w, h, label, on=True, led_on=True, size=24)
         plate(off, w, h, label, on=False, led_on=False, size=24)
         defs.append(button_def(key, on, off, w, h, 1, 1, TOGGLE_ACTIONS))
-    # Transpose and Inversion: RSFX-style film-strip knobs. Name and Value labels come from the plugin.
-    for key in ("viKnob_tr", "viKnob_inv"):
+    # Transpose, Inversion, Octave and Voicing: RSFX-style film-strip knobs. Name and Value labels come from the plugin.
+    for key in ("viKnob_tr", "viKnob_inv", "viKnob_oct", "viKnob_voi"):
         knob = copy.deepcopy(KNOB_TEMPLATE)
         kd = [c for c in knob["componentsData"] if c["componentData"]["type"] == "Knob"][0]["componentData"]["data"]
         kd["filmStrip"] = "vi_knob.png"
@@ -300,10 +300,11 @@ def build():
         knob["componentData"]["data"]["numFrames"] = LED_FRAMES
         knob["bounds"]["bounds"] = f"0 0 {BAND_W} {BAND_H}"
         defs.append({"key": f"viBand_{b}", "value": col})
-    defs.append({"key": "viReadout_prog", "value": copy.deepcopy(KNOB_TEMPLATE)})
-    defs.append({"key": "viReadout_level", "value": copy.deepcopy(KNOB_TEMPLATE)})
+    readout_keys = ("viReadout_prog", "viReadout_level", "viReadout_key", "viReadout_keyconf")
+    for key in readout_keys:
+        defs.append({"key": key, "value": copy.deepcopy(KNOB_TEMPLATE)})
     # the readout uses the knob's labels only: drop its film-strip so only Name and Value show
-    for readout in defs[-2:]:
+    for readout in defs[-len(readout_keys):]:
         readout["value"]["componentsData"] = [c for c in readout["value"]["componentsData"]
                                               if c["componentData"]["type"] != "Knob"]
 
@@ -321,16 +322,31 @@ def build():
     children.append(place("viBar_level", "Input level", 200, 466, LED_W, LED_H, 6))
     children.append(place("viReadout_level", "Level", 880, 450, 260, 60, 6))
 
-    root = {"version": 4, "actions": [], "backgroundData": ROOT_BG, "ignoreMousePresses": False,
-            "disableCoarseDataWheel": False, "repeats": 1, "hideQLinkBounds": True, "componentsData": children}
-    defs.append({"key": "PLAY|Play", "value": root})
+    def page(components):
+        return {"version": 4, "actions": [], "backgroundData": ROOT_BG, "ignoreMousePresses": False,
+                "disableCoarseDataWheel": False, "repeats": 1, "hideQLinkBounds": True, "componentsData": components}
+    defs.append({"key": "PLAY|Play", "value": page(children)})
+    # Analyze: the Analyse toggle, key and key confidence readouts, and the progress bar
+    analyze = [label_bg("", 0, 0),
+               place("viToggle_ana", "Analyse", 60, 96, 260, 56, 1),
+               place("viReadout_key", "Key", 360, 96, 260, 60, 25),
+               place("viReadout_keyconf", "Key confidence", 660, 96, 260, 60, 26),
+               place("viBar_prog", "Analyse progress", 200, 420, LED_W, LED_H, 4),
+               place("viReadout_prog", "Progress", 880, 404, 260, 60, 4)]
+    defs.append({"key": "ANALYZE|Analyze", "value": page(analyze)})
+    # Pads: Octave sets the pad window for melody_pads.mid; Voicing sets the chord shape in voiced_chords.mid
+    pads = [label_bg("", 0, 0),
+            place("viKnob_oct", "Octave", 300, 200, 108, 138, 23),
+            place("viKnob_voi", "Voicing", 560, 200, 108, 138, 24)]
+    defs.append({"key": "PADS|Pads", "value": page(pads)})
+    tabs = [("Play", "PLAY|Play"), ("Analyze", "ANALYZE|Analyze"), ("Pads", "PADS|Pads")]
     tui = {"pageData": {
         "version": 1,
         "componentDefinitions": {"version": 2, "importFiles": [], "localComponentDefinitions": defs},
         "info": {"version": 1, "type": "CompleteDescription"},
-        "tabs": [{"version": 3, "tabName": "Play", "fnKeyIndex": 0, "fnKeySubIndex": 0,
-                  "qlinkBoundsData": ["0 0 0 0"], "componentName": "PLAY|Play", "initialSize": f"0 0 {W} {H}",
-                  "scale": 1.0}]}}
+        "tabs": [{"version": 3, "tabName": name, "fnKeyIndex": i, "fnKeySubIndex": 0,
+                  "qlinkBoundsData": ["0 0 0 0"], "componentName": comp, "initialSize": f"0 0 {W} {H}",
+                  "scale": 1.0} for i, (name, comp) in enumerate(tabs)]}}
     with open(os.path.join(OUT, "TUI.json"), "w") as f:
         json.dump(tui, f, indent=1)
     # Q-Links: knobs on the MPC map to the plugin's parameters (only the ones this plugin uses)

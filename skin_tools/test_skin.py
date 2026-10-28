@@ -13,8 +13,8 @@ tui = json.load(open(os.path.join(D, "TUI.json")))["pageData"]
 defs = {x["key"]: x["value"] for x in tui["componentDefinitions"]["localComponentDefinitions"]}
 W, H = map(int, tui["tabs"][0]["initialSize"].split()[2:4])
 print("1. file structure")
-check(tui["tabs"][0]["componentName"] in defs, "tab root component exists")
-check(len(tui["tabs"]) == 1, "one tab (Play)")
+check(all(t["componentName"] in defs for t in tui["tabs"]), "every tab root component exists")
+check([t["tabName"] for t in tui["tabs"]] == ["Play", "Analyze", "Pads"], "three tabs: Play, Analyze, Pads")
 qk = json.load(open(os.path.join(D, "Q-Links.json")))
 check("Screen Mode Q-Links" in qk, "Q-Links file has the screen mode map")
 
@@ -39,7 +39,7 @@ check(True, "image checks finished")
 print("3. placements fit the screen and bind to valid parameters")
 root = defs["PLAY|Play"]
 bound_params = {}
-for c in root["componentsData"]:
+for c in [c for t in tui["tabs"] for c in defs[t["componentName"]]["componentsData"]]:
     t = c["componentData"]["type"]
     x, y, w, h = bounds(c["bounds"]["bounds"])
     if t == "Image":
@@ -48,7 +48,7 @@ for c in root["componentsData"]:
     param = c["handle remapping"]["map"][0]["value"]
     n = int(param.split()[-1])
     bound_params.setdefault(n, []).append(c["componentData"]["name"])
-    check(0 <= n <= 22, f"{c['componentData']['name']} binds to {param} (plugin has parameters 0-22)")
+    check(0 <= n <= 26, f"{c['componentData']['name']} binds to {param} (plugin has parameters 0-26)")
 for n in sorted(bound_params):
     print(f"     parameter {n}: {', '.join(bound_params[n])}")
 # Progress must be read-only: parameter 4 may only feed labels, never a control that writes to it
@@ -72,7 +72,7 @@ check(defs["viBar_prog"]["componentsData"][0]["componentData"]["type"] == "Knob"
       "the progress bar is an LED film strip")
 
 print("4. knobs use a film strip that exists and has the frames it claims")
-for key in ("viKnob_tr", "viKnob_inv", "viBar_prog", "viBar_level") + tuple(f"viBand_{b}" for b in range(16)):
+for key in ("viKnob_tr", "viKnob_inv", "viKnob_oct", "viKnob_voi", "viBar_prog", "viBar_level") + tuple(f"viBand_{b}" for b in range(16)):
     knob = [c for c in defs[key]["componentsData"] if c["componentData"]["type"] == "Knob"][0]["componentData"]["data"]
     strip = os.path.join(D, knob["filmStrip"])
     check(os.path.exists(strip), f"{key}: film strip {knob['filmStrip']} exists")
