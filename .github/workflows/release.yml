@@ -1,0 +1,40 @@
+name: Release Velvet Interpolator
+# Push a version tag (for example v0.1.0) to build the MPC package and attach it to a GitHub Release.
+on:
+  push:
+    tags:
+      - "v*"
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sh scripts/run-tests.sh
+  release:
+    needs: test
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile velvet_interp.so for ARMv7 in Ubuntu 18.04 (glibc 2.27)
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src ubuntu:18.04 sh -c '
+            sed -i "s|archive.ubuntu.com|old-releases.ubuntu.com|g; s|security.ubuntu.com|old-releases.ubuntu.com|g" /etc/apt/sources.list &&
+            apt-get update && apt-get install -y g++-arm-linux-gnueabihf &&
+            sh scripts/build-arm.sh build/arm'
+      - name: Check the binary matches the device (ARMv7, glibc 2.27, allowed libraries only)
+        run: sh scripts/check-arm.sh build/arm/velvet_interp.so
+      - name: Make the install package
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          sh scripts/make-package.sh "$VERSION" build/arm/velvet_interp.so build/pkg
+          echo "PKG=build/pkg/VelvetInterpolator-$VERSION-mpc-armv7.zip" >> "$GITHUB_ENV"
+      - name: Create the GitHub Release with the package
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.PKG }}
+          body: |
+            Velvet Interpolator for the Akai MPC X (32-bit ARMv7 MPC OS).
+            Built in Ubuntu 18.04 (glibc 2.27). The package passed scripts/check-arm.sh.
+            Not yet verified on a device: see TEST_ON_MPC.md in the repository.
