@@ -26,6 +26,7 @@ jobs:
       - name: Compile velvet_interp.so for ARMv7 in Ubuntu 18.04
         run: |
           docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src ubuntu:18.04 sh -c '
+            sed -i -E "s|https?://(archive|security).ubuntu.com/ubuntu|http://old-releases.ubuntu.com/ubuntu|g" /etc/apt/sources.list &&
             apt-get update &&
             DEBIAN_FRONTEND=noninteractive apt-get install -y g++-arm-linux-gnueabihf &&
             sh scripts/build-arm.sh build/arm'
