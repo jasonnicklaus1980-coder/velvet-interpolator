@@ -20,7 +20,7 @@ jobs:
       - name: Compile velvet_interp.so for ARMv7 in Ubuntu 18.04 (glibc 2.27)
         run: |
           docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src ubuntu:18.04 sh -c '
-            sed -i "s|archive.ubuntu.com|old-releases.ubuntu.com|g; s|security.ubuntu.com|old-releases.ubuntu.com|g" /etc/apt/sources.list &&
+            sed -i -E "s#https?://(archive|security)\.ubuntu\.com/ubuntu#http://archive.ubuntu.com/ubuntu#g" /etc/apt/sources.list &&
             apt-get update && apt-get install -y g++-arm-linux-gnueabihf &&
             sh scripts/build-arm.sh build/arm'
       - name: Check the binary matches the device (ARMv7, glibc 2.27, allowed libraries only)
