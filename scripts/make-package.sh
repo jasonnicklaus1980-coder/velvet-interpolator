@@ -8,6 +8,7 @@ case "$VER" in [0-9]*.[0-9]*.[0-9]*) ;; *) echo "error: version must look like 1
 [ -f "$SO" ] || { echo "error: $SO not found" >&2; exit 1; }
 STAGE="$OUT/VelvetInterpolator-$VER"
 rm -rf "$STAGE" && mkdir -p "$OUT" && cp -a template "$STAGE"
+mkdir -p "$STAGE/payload/vst"
 cp "$SO" "$STAGE/payload/vst/velvet_interp.so"
 # version strings: installer, plugin registration, and the skin's version file
 sed -i "s/VERSION='[0-9.]*'/VERSION='$VER'/" "$STAGE/install.sh"
