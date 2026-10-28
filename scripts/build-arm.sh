@@ -1,42 +1,41 @@
 
-name: Build Velvet Interpolator
-on:
-  push:
-  pull_request:
-  workflow_dispatch:
+#!/bin/sh
+set -eu
 
-env:
-  VERSION: "0.1.0"
+cd "$(dirname "$0")/.."
 
-jobs:
-  test:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - run: sh scripts/run-tests.sh
+OUT="${1:-build/arm}"
+CXX=arm-linux-gnueabihf-g++
+CC=arm-linux-gnueabihf-gcc
 
-  build-arm:
-    needs: test
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
+command -v "$CXX" >/dev/null || {
+    echo "error: $CXX not found" >&2
+    exit 1
+}
 
-      # Compile inside Ubuntu 18.04 (glibc 2.27),
-      # the newest glibc supported by the MPC.
-      - name: Compile velvet_interp.so for ARMv7 in Ubuntu 18.04
-        run: |
-          docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src ubuntu:18.04 sh -c '
-            apt-get update &&
-            DEBIAN_FRONTEND=noninteractive apt-get install -y g++-arm-linux-gnueabihf &&
-            sh scripts/build-arm.sh build/arm'
+mkdir -p "$OUT"
 
-      - name: Check the binary matches the device (ARMv7, glibc 2.27, no extra libraries)
-        run: sh scripts/check-arm.sh build/arm/velvet_interp.so
+FLAGS="-O2 -fPIC -fvisibility=hidden -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard -Wall -Wextra"
 
-      - name: Make the install package
-        run: sh scripts/make-package.sh "$VERSION" build/arm/velvet_interp.so build/pkg
+"$CC" -std=gnu99 $FLAGS -c src/musicout.c -o "$OUT/musicout.o"
+"$CC" -std=gnu99 $FLAGS -c src/chordcore.c -o "$OUT/chordcore.o"
+"$CC" -std=gnu99 $FLAGS -c src/notes.c -o "$OUT/notes.o"
+"$CC" -std=gnu99 $FLAGS -c src/poly.c -o "$OUT/poly.o"
+"$CC" -std=gnu99 $FLAGS -c src/hpss.c -o "$OUT/hpss.o"
+"$CC" -std=gnu99 $FLAGS -c src/keys.c -o "$OUT/keys.o"
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: VelvetInterpolator-${{ env.VERSION }}-mpc-armv7
-          path: build/pkg/VelvetInterpolator-${{ env.VERSION }}-mpc-armv7.zip
+"$CXX" -std=c++14 $FLAGS -fno-exceptions -fno-rtti -Isrc \
+    -c src/velvet_interp.cpp -o "$OUT/velvet_interp.o"
+
+"$CXX" -shared -static-libgcc -s \
+    -o "$OUT/velvet_interp.so" \
+    "$OUT/velvet_interp.o" \
+    "$OUT/musicout.o" \
+    "$OUT/chordcore.o" \
+    "$OUT/notes.o" \
+    "$OUT/poly.o" \
+    "$OUT/hpss.o" \
+    "$OUT/keys.o" \
+    -lm -lpthread
+
+echo "built $OUT/velvet_interp.so"
