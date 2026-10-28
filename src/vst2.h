@@ -56,3 +56,10 @@ enum {
     kVstMaxProgNameLen = 24, kVstMaxParamStrLen = 8, kVstMaxEffectNameLen = 32,
     kVstMaxVendorStrLen = 64, kVstMaxProductStrLen = 64
 };
+
+/* Host time (audioMasterGetTime) and MIDI output from a plugin (audioMasterProcessEvents), VST 2.4 */
+enum { audioMasterGetTime = 7, audioMasterProcessEvents = 8, kVstTransportPlaying = 1 << 1 };
+struct VstTimeInfo {
+    double samplePos, sampleRate, nanoSeconds, ppqPos, tempo, barStartPos, cycleStartPos, cycleEndPos;
+    int32_t timeSigNumerator, timeSigDenominator, smpteOffset, smpteFrameRate, samplesToNextClock, flags;
+};

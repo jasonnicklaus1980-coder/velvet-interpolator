@@ -23,6 +23,7 @@ FLAGS="-O2 -fPIC -fvisibility=hidden -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi
 "$CC" -std=gnu99 $FLAGS -c src/poly.c -o "$OUT/poly.o"
 "$CC" -std=gnu99 $FLAGS -c src/hpss.c -o "$OUT/hpss.o"
 "$CC" -std=gnu99 $FLAGS -c src/keys.c -o "$OUT/keys.o"
+"$CC" -std=gnu99 $FLAGS -c src/padsend.c -o "$OUT/padsend.o"
 
 "$CXX" -std=c++14 $FLAGS -fno-exceptions -fno-rtti -Isrc \
     -c src/velvet_interp.cpp -o "$OUT/velvet_interp.o"
@@ -36,6 +37,7 @@ FLAGS="-O2 -fPIC -fvisibility=hidden -march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi
     "$OUT/poly.o" \
     "$OUT/hpss.o" \
     "$OUT/keys.o" \
+    "$OUT/padsend.o" \
     -lm -lpthread
 
 echo "built $OUT/velvet_interp.so"

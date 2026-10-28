@@ -20,6 +20,7 @@ extern "C" {
 #include "poly.h"
 #include "hpss.h"
 #include "keys.h"
+#include "padsend.h"
 }
 
 #ifndef VI_OUT_DIR
@@ -33,6 +34,15 @@ static const double kMaxSeconds = 60.0;            /* take length */
 static const char* kBanks = "ABCD";
 static const double kLineFmin = 40.0, kLineFmax = 1000.0;   /* bass to lead */
 enum { JOB_NONE, JOB_ANALYSE, JOB_LINE, JOB_LIVE };
+static const int kPadMax = 1024;                    /* pad hits kept for playback */
+static const int kEvMax = 256;                      /* MIDI events per audio block */
+
+/* the list the host reads for audioMasterProcessEvents: a count, then that many event pointers */
+struct VstEventList {
+    int32_t numEvents;
+    intptr_t reserved;
+    void* events[kEvMax];
+};
 
 struct Interp {
     AEffect fx;
@@ -65,6 +75,14 @@ struct Interp {
     pthread_t worker;
     int workerStarted = 0;
     std::atomic<int> lastStatus{0};
+    /* pad schedule: the worker fills the inactive buffer and publishes it; the audio thread reads the active one */
+    ps_note padBuf[2][kPadMax];
+    size_t padN[2] = {0, 0};
+    std::atomic<int> padActive{-1};
+    /* playback: the schedule restarts from zero each time the host transport starts */
+    bool wasPlaying = false;
+    double playStart = 0.0;
+    ps_MidiEvent evBuf[kEvMax];
 };
 
 static Interp* P(AEffect* e) { return (Interp*)e->object; }
@@ -107,6 +125,22 @@ static void writeChords(Interp* p, const cc_segment* seg, size_t count) {
             vi_write_smf(path, notes, m, 120.0);
         }
     }
+    /* the same pad hits as a playable schedule: bank A..D is the MIDI channel, pad note is 36 + index % 16 */
+    int next = p->padActive.load() == 1 ? 0 : 1;
+    size_t pn = 0;
+    for (size_t i = 0; i < count && pn < (size_t)kPadMax; i++) {
+        int s = seg[i].state;
+        if (s >= 12 * CC_NQUAL) continue;
+        int idx = -1; for (int k = 0; k < nOrder; k++) if (order[k] == s) idx = k;
+        if (idx < 0) continue;
+        ps_note* d = &p->padBuf[next][pn++];
+        d->start = seg[i].start_frame * (double)CC_HOP / p->sr;
+        d->end = (seg[i].end_frame + 1) * (double)CC_HOP / p->sr;
+        d->pitch = 36 + idx % 16; d->channel = idx / 16; d->velocity = 100;
+    }
+    p->padN[next] = pn;
+    p->padActive.store(next);
+
     /* key estimate: pitch classes of the chord tones, weighted by how long each chord lasts */
     double hist[12] = {0};
     for (size_t i = 0; i < count; i++) {
@@ -346,6 +380,10 @@ static double band_hz(int k) { return 80.0 * pow(10000.0 / 80.0, k / 15.0); }   
 static intptr_t dispatcher(AEffect* e, int32_t op, int32_t idx, intptr_t, void* ptr, float opt) {
     Interp* p = P(e);
     switch (op) {
+    case effCanDo:
+        if (ptr && (!strcmp((const char*)ptr, "sendVstMidiEvent") || !strcmp((const char*)ptr, "sendVstEvents")))
+            return 1;
+        return 0;
     case effSetSampleRate:
         p->sr = opt;
         for (int k = 0; k < kBands; k++) p->gcoef[k] = 2.0 * cos(2.0 * M_PI * band_hz(k) / opt);
@@ -462,8 +500,42 @@ static float getParameter(AEffect* e, int32_t i) {
     }
 }
 
+/* MIDI out. The host sends the events back through audioMasterProcessEvents, once per block. */
+static void emitEvents(Interp* p, const ps_MidiEvent* ev, size_t m) {
+    if (m == 0) return;
+    VstEventList list;
+    list.numEvents = (int32_t)m;
+    list.reserved = 0;
+    for (size_t i = 0; i < m; i++) list.events[i] = (void*)&ev[i];
+    p->host(&p->fx, audioMasterProcessEvents, 0, 0, &list, 0.f);
+}
+
+/* While the host transport plays, emits the pad hits that fall in this block, counted from when it started.
+   When it stops, every note gets a note-off so nothing hangs. Reads the schedule only; never waits. */
+static void sendPadEvents(Interp* p, int32_t n) {
+    VstTimeInfo* ti = (VstTimeInfo*)p->host(&p->fx, audioMasterGetTime, 0, kVstTransportPlaying, nullptr, 0.f);
+    bool playing = ti && (ti->flags & kVstTransportPlaying);
+    int act = p->padActive.load();
+    if (act < 0) return;
+    const ps_note* sched = p->padBuf[act];
+    size_t total = p->padN[act];
+    if (!playing && p->wasPlaying) {
+        for (size_t off = 0; off < total; off += kEvMax) {
+            size_t m = ps_all_off(sched + off, total - off < (size_t)kEvMax ? total - off : (size_t)kEvMax, p->evBuf, kEvMax);
+            emitEvents(p, p->evBuf, m);
+        }
+    }
+    if (playing && !p->wasPlaying) p->playStart = ti->samplePos;
+    p->wasPlaying = playing;
+    if (!playing) return;
+    long long pos = llround(ti->samplePos - p->playStart);
+    size_t m = ps_block_events(sched, total, pos, n, p->sr, p->evBuf, kEvMax);
+    emitEvents(p, p->evBuf, m);
+}
+
 static void processReplacing(AEffect* e, float** in, float** out, int32_t n) {
     Interp* p = P(e);
+    sendPadEvents(p, n);
     float peak = 0.f;
     bool rec = p->recording.load();
     double s1[16] = {0}, s2[16] = {0};

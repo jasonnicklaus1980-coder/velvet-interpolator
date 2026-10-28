@@ -143,3 +143,13 @@ and checks the binary against the device gate.
   sustained chords (12 and 19 notes for a 4-chord progression).
 - Not tested on a real commercial song. Dense mixes (drums, vocals, reverb) are expected to score much lower.
   There is no source separation, so the drums and vocals are analysed along with everything else.
+
+## MIDI out to pads (new, not verified on the MPC)
+- The plugin declares MIDI output (effCanDo "sendVstMidiEvent"). While the host transport plays, each pad hit from
+  the last analysis goes out as a note-on and note-off, counted from the moment the transport started.
+- Bank A to D is sent on MIDI channels 1 to 4; the pad note is 36 + index % 16. Tempo is fixed at 120 BPM, so the
+  hits stay in time only if the MPC project runs at 120 BPM.
+- When the transport stops, every note gets a note-off.
+- Tested with a fake host (tests/midi_out_test.cpp): hits go out while playing, note-offs match, a stop sends
+  note-offs, and a restart replays from zero. Not tested: whether the MPC accepts MIDI from this plugin, what the
+  MPC does with the channels, or whether the transport position it reports is usable. Those need the device.
