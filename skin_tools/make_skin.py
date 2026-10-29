@@ -356,6 +356,17 @@ def build():
               "Program Mode Q-Links": {"version": 4, "map": []}}
     with open(os.path.join(OUT, "Q-Links.json"), "w") as f:
         json.dump(qlinks, f, indent=1)
+    # 8-by-1 Q-Links (as Velvet Chords ships it): 16 slots per tab, -1 means unused.
+    # Tab 1 Play, 2 Analyze, 3 Pads. Slot number -> plugin parameter.
+    tabs8 = [(1, {1: 2, 2: 3, 3: 0, 4: 1, 5: 5}), (2, {1: 1}), (3, {1: 23, 2: 24})]
+    def slots(mapping):
+        return {f"Q-Link {i}": mapping.get(i, -1) for i in range(1, 17)}
+    qlinks8 = {"version": 4, "info": {"version": 1, "type": "CompleteDescription"},
+               "Screen Mode Q-Links": {"version": 4, "map": [
+                   {"Tab": t, "SubTab": 1, "Bank Direction": "Column", "Q-Links": slots(m)} for t, m in tabs8]},
+               "Program Mode Q-Links": {"version": 4, "map": []}}
+    with open(os.path.join(OUT, "Q-Links - 8by1.json"), "w") as f:
+        json.dump(qlinks8, f, indent=1)
     print("wrote", OUT, "with", len(defs), "definitions and", len(os.listdir(OUT)), "files")
 
 if __name__ == "__main__":

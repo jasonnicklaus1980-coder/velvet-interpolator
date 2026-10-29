@@ -88,6 +88,12 @@ for key in ("viKnob_tr", "viKnob_inv", "viKnob_oct", "viKnob_voi", "viBar_prog",
 print("5. Q-Links point only at this plugin's parameters")
 links = qk["Screen Mode Q-Links"]["map"][0]["Q-Links"]
 check(all(0 <= v <= 5 for v in links.values()), f"Q-Link targets {sorted(set(links.values()))} are valid")
+q8 = json.load(open(os.path.join(D, "Q-Links - 8by1.json")))
+check([t["Tab"] for t in q8["Screen Mode Q-Links"]["map"]] == [1, 2, 3], "8-by-1 Q-Links cover tabs 1 to 3")
+for t in q8["Screen Mode Q-Links"]["map"]:
+    slots = t["Q-Links"]
+    check(len(slots) == 16 and all(-1 <= v <= 26 for v in slots.values()),
+          f"8-by-1 tab {t['Tab']}: 16 slots, all targets are parameters 0-26 or unused")
 
 print("\n" + ("SKIN CHECKS PASSED" if not fails else f"{fails} SKIN CHECK(S) FAILED"))
 sys.exit(1 if fails else 0)
