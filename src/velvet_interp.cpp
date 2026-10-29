@@ -26,7 +26,7 @@ extern "C" {
 #ifndef VI_OUT_DIR
 #define VI_OUT_DIR "/media/az01-internal/VelvetInterp"
 #endif
-static const int32_t kUniqueId = 0x56494E31;     /* 'VIN1' */
+static const int32_t kUniqueId = 0x56494E32;     /* 'VIN2' */
 enum { P_RECORD, P_ANALYSE, P_TRANSPOSE, P_INVERSION, P_PROGRESS, P_LINE, P_LEVEL, P_BAND0,
        P_OCTAVE = P_BAND0 + 16, P_VOICING, P_KEY, P_KEYCONF, P_COUNT };
 static const int kBands = 16;                       /* LED box: 16 log-spaced frequency bands, 80 Hz to 10 kHz */
